@@ -11,7 +11,6 @@ public class MazeGenerator : MonoBehaviour
     public MazeCell[,] mMazeCells;
     public Maze maze { get; private set; }
     Stack<Cell> _stack = new Stack<Cell>();
-    public bool MazeGenerationCompleted { get; private set; } = false;
 
     void Start()
     {
@@ -41,7 +40,10 @@ public class MazeGenerator : MonoBehaviour
 
     public void CreateNewMaze()
     {
-        _stack.Push(maze.GetCell(0, 0));
+        int x = Random.Range(0, cols);
+        int y = Random.Range(0, rows);
+
+        _stack.Push(maze.GetCell(x, y));
         StartCoroutine(Coroutine_Generate());
     }
 
@@ -83,8 +85,7 @@ public class MazeGenerator : MonoBehaviour
         while (!flag) {
             flag = GenerateStep();
 
-            yield return new WaitForSeconds(0.01f);
+            yield return new WaitForSeconds(0.07f);
         }
-        MazeGenerationCompleted = true;
     }
 }
